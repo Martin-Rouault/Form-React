@@ -4,7 +4,7 @@ import "./App.css";
 import { useForm } from "react-hook-form";
 
 function App() {
-    const { register, handleSubmit, reset, watch } = useForm({
+    const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             name: "",
             dueDate: "",
