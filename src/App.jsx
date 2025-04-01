@@ -28,7 +28,7 @@ function App() {
         <div className="container mt-4">
             <h2>Formulaire de Tâche</h2>
             <Form onSubmit={handleOnSubmit}>
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Nom</Form.Label>
                     <Form.Control
                         onChange={handleOnChange}
@@ -39,7 +39,7 @@ function App() {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="dueDate">
                     <Form.Label>Date Due</Form.Label>
                     <Form.Control
                         onChange={handleOnChange}
@@ -50,7 +50,7 @@ function App() {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="priority">
                     <Form.Label>Priorité</Form.Label>
                     <Form.Select
                         onChange={handleOnChange}
@@ -63,7 +63,7 @@ function App() {
                     </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="mb-3">
+                <Form.Group className="mb-3" controlId="isCompleted">
                     <Form.Check
                         type="checkbox"
                         name="isCompleted"
