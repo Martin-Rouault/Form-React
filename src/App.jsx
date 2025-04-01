@@ -1,40 +1,33 @@
 import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 function App() {
-    const [formData, setFormData] = useState({
-        name: "",
-        dueDate: "",
-        priority: "Basse",
-        isCompleted: false,
+    const { register, handleSubmit, reset, watch } = useForm({
+        defaultValues: {
+            name: "",
+            dueDate: "",
+            priority: "Basse",
+            isCompleted: false,
+        },
     });
 
-    const handleOnChange = (event) => {
-        const { name, value, type, checked } = event.target;
-        setFormData({
-            ...formData,
-            [name]: type === "checkbox" ? checked : value,
-        });
-    };
-
-    const handleOnSubmit = (event) => {
-        event.preventDefault();
-        console.log(formData);
+    const onSubmit = (data) => {
+        console.log(data);
+        reset();
     };
 
     return (
         <div className="container mt-4">
             <h2>Formulaire de Tâche</h2>
-            <Form onSubmit={handleOnSubmit}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Nom</Form.Label>
                     <Form.Control
-                        onChange={handleOnChange}
+                        {...register("name")}
                         name="name"
                         type="text"
-                        value={formData.name}
                         required
                     />
                 </Form.Group>
@@ -42,21 +35,16 @@ function App() {
                 <Form.Group className="mb-3" controlId="dueDate">
                     <Form.Label>Date Due</Form.Label>
                     <Form.Control
-                        onChange={handleOnChange}
+                        {...register("dueDate")}
                         type="date"
                         name="dueDate"
                         required
-                        value={formData.dueDate}
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="priority">
                     <Form.Label>Priorité</Form.Label>
-                    <Form.Select
-                        onChange={handleOnChange}
-                        name="priority"
-                        value={formData.priority}
-                    >
+                    <Form.Select {...register("priority")} name="priority">
                         <option value="Basse">Basse</option>
                         <option value="Moyenne">Moyenne</option>
                         <option value="Elevée">Elevée</option>
@@ -68,8 +56,8 @@ function App() {
                         type="checkbox"
                         name="isCompleted"
                         label="Complété"
-                        checked={formData.isCompleted}
-                        onChange={handleOnChange}
+                        {...register("isCompleted")}
+                        checked={watch("isCompleted")}
                     />
                 </Form.Group>
 
