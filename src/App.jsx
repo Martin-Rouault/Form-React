@@ -25,8 +25,9 @@ function App() {
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Nom</Form.Label>
                     <Form.Control
-                        {...register("name")}
-                        name="name"
+                        {...register("name", {
+                            required: "Le nom est requis",
+                        })}
                         type="text"
                         required
                     />
@@ -35,16 +36,17 @@ function App() {
                 <Form.Group className="mb-3" controlId="dueDate">
                     <Form.Label>Date Due</Form.Label>
                     <Form.Control
-                        {...register("dueDate")}
+                        {...register("dueDate", {
+                            required: "La date est requise",
+                        })}
                         type="date"
-                        name="dueDate"
                         required
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="priority">
                     <Form.Label>Priorité</Form.Label>
-                    <Form.Select {...register("priority")} name="priority">
+                    <Form.Select {...register("priority")}>
                         <option value="Basse">Basse</option>
                         <option value="Moyenne">Moyenne</option>
                         <option value="Elevée">Elevée</option>
@@ -57,7 +59,6 @@ function App() {
                         name="isCompleted"
                         label="Complété"
                         {...register("isCompleted")}
-                        checked={watch("isCompleted")}
                     />
                 </Form.Group>
 
