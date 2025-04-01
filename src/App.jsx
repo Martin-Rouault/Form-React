@@ -5,36 +5,57 @@ import { useState } from "react";
 
 function App() {
     const [formData, setFormData] = useState({
-        name: "Toto",
-        date: "03/05/2000",
+        name: "",
+        dueDate: "",
         priority: "Basse",
-        isCompleted: true,
+        isCompleted: false,
     });
+
+    const handleOnChange = (event) => {
+        setFormData((prevValue) => {
+            return {
+                ...prevValue,
+                [event.target.name]: event.target.value,
+            };
+        });
+    };
+
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+        console.log(formData);
+    };
 
     return (
         <div className="container mt-4">
             <h2>Formulaire de Tâche</h2>
-            <Form>
+            <Form onSubmit={handleOnSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Nom</Form.Label>
-                    <Form.Control type="text" required defaultValue={formData.name} />
+                    <Form.Control
+                        onChange={handleOnChange}
+                        name="name"
+                        type="text"
+                        defaultValue=""
+                        required
+                    />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                     <Form.Label>Date Due</Form.Label>
                     <Form.Control
+                        onChange={handleOnChange}
                         type="date"
                         name="dueDate"
                         required
-                        defaultValue={formData.date}
+                        defaultValue=""
                     />
                 </Form.Group>
 
                 <Form.Group className="mb-3">
                     <Form.Label>Priorité</Form.Label>
                     <Form.Select
+                        onChange={handleOnChange}
                         name="priority"
-                        required
                         defaultValue={formData.priority}
                     >
                         <option value="Basse">Basse</option>
@@ -48,17 +69,17 @@ function App() {
                         type="checkbox"
                         name="isCompleted"
                         label="Complété"
-                        defaultValue={formData.isCompleted}
+                        checked={formData.isCompleted}
+                        onChange={(event) => {
+                            setFormData({
+                                ...formData,
+                                isCompleted: event.target.checked,
+                            });
+                        }}
                     />
                 </Form.Group>
 
-                <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={() => {
-                        console.log(formData);
-                    }}
-                >
+                <Button variant="primary" type="submit">
                     Envoyer
                 </Button>
             </Form>
