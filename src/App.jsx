@@ -48,8 +48,8 @@ function App() {
                         })}
                         type="date"
                     />
-                    {errors.name && (
-                        <p className="text-danger">{errors.name.message}</p>
+                    {errors.dueDate && (
+                        <p className="text-danger">{errors.dueDate.message}</p>
                     )}
                 </Form.Group>
 
@@ -60,8 +60,8 @@ function App() {
                         <option value="Moyenne">Moyenne</option>
                         <option value="Elevée">Elevée</option>
                     </Form.Select>
-                    {errors.name && (
-                        <p className="text-danger">{errors.name.message}</p>
+                    {errors.priority && (
+                        <p className="text-danger">{errors.priority.message}</p>
                     )}
                 </Form.Group>
 
@@ -71,8 +71,10 @@ function App() {
                         label="Complété"
                         {...register("isCompleted")}
                     />
-                    {errors.name && (
-                        <p className="text-danger">{errors.name.message}</p>
+                    {errors.isCompleted && (
+                        <p className="text-danger">
+                            {errors.isCompleted.message}
+                        </p>
                     )}
                 </Form.Group>
 
