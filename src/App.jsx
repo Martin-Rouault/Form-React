@@ -4,7 +4,12 @@ import "./App.css";
 import { useForm } from "react-hook-form";
 
 function App() {
-    const { register, handleSubmit, reset } = useForm({
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm({
         defaultValues: {
             name: "",
             dueDate: "",
@@ -29,8 +34,10 @@ function App() {
                             required: "Le nom est requis",
                         })}
                         type="text"
-                        required
                     />
+                    {errors.name && (
+                        <p className="text-danger">{errors.name.message}</p>
+                    )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="dueDate">
@@ -40,8 +47,10 @@ function App() {
                             required: "La date est requise",
                         })}
                         type="date"
-                        required
                     />
+                    {errors.name && (
+                        <p className="text-danger">{errors.name.message}</p>
+                    )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="priority">
@@ -51,15 +60,20 @@ function App() {
                         <option value="Moyenne">Moyenne</option>
                         <option value="Elevée">Elevée</option>
                     </Form.Select>
+                    {errors.name && (
+                        <p className="text-danger">{errors.name.message}</p>
+                    )}
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="isCompleted">
                     <Form.Check
                         type="checkbox"
-                        name="isCompleted"
                         label="Complété"
                         {...register("isCompleted")}
                     />
+                    {errors.name && (
+                        <p className="text-danger">{errors.name.message}</p>
+                    )}
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
