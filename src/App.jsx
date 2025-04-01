@@ -12,11 +12,10 @@ function App() {
     });
 
     const handleOnChange = (event) => {
-        setFormData((prevValue) => {
-            return {
-                ...prevValue,
-                [event.target.name]: event.target.value,
-            };
+        const { name, value, type, checked } = event.target;
+        setFormData({
+            ...formData,
+            [name]: type === "checkbox" ? checked : value,
         });
     };
 
@@ -35,7 +34,7 @@ function App() {
                         onChange={handleOnChange}
                         name="name"
                         type="text"
-                        defaultValue=""
+                        value={formData.name}
                         required
                     />
                 </Form.Group>
@@ -47,7 +46,7 @@ function App() {
                         type="date"
                         name="dueDate"
                         required
-                        defaultValue=""
+                        value={formData.dueDate}
                     />
                 </Form.Group>
 
@@ -56,7 +55,7 @@ function App() {
                     <Form.Select
                         onChange={handleOnChange}
                         name="priority"
-                        defaultValue={formData.priority}
+                        value={formData.priority}
                     >
                         <option value="Basse">Basse</option>
                         <option value="Moyenne">Moyenne</option>
@@ -70,12 +69,7 @@ function App() {
                         name="isCompleted"
                         label="Complété"
                         checked={formData.isCompleted}
-                        onChange={(event) => {
-                            setFormData({
-                                ...formData,
-                                isCompleted: event.target.checked,
-                            });
-                        }}
+                        onChange={handleOnChange}
                     />
                 </Form.Group>
 
