@@ -2,6 +2,41 @@ import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const formSchema = yup.object().shape({
+    name: yup
+        .string()
+        .required("Le nom est requis")
+        .min(8, "Le nom doit contenir au moins 8 caractères")
+        .max(15, "Le nom ne peut pas dépasser 15 caractères"),
+    dueDate: yup
+        .string()
+        .required("La date est requise")
+        .matches(
+            /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+            "Le format doit être JJ/MM/AAAA"
+        )
+        .test(
+            "isValidDate",
+            "La date ne doit pas être antérieure à aujourd’hui",
+            (value) => {
+                if (!value) return false;
+                const [day, month, year] = value.split("/").map(Number);
+                const inputDate = new Date(year, month - 1, day);
+                inputDate.setHours(0, 0, 0, 0);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return inputDate >= today;
+            }
+        )
+        .required("Ce champ est requis"),
+    priority: yup
+        .string()
+        .oneOf(["Basse", "Moyenne", "Elevée"], "Priorité invalide"),
+    isCompleted: yup.boolean(),
+});
 
 function App() {
     const {
@@ -10,6 +45,7 @@ function App() {
         reset,
         formState: { errors },
     } = useForm({
+        resolver: yupResolver(formSchema),
         defaultValues: {
             name: "",
             dueDate: "",
@@ -46,7 +82,7 @@ function App() {
                         {...register("dueDate", {
                             required: "La date est requise",
                         })}
-                        type="date"
+                        type="text"
                     />
                     {errors.dueDate && (
                         <p className="text-danger">{errors.dueDate.message}</p>
